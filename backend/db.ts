@@ -25,11 +25,11 @@ export class Repository {
   }
 
   async getSlots() {
-    return await this.sql<slots.Slot[]>`SELECT * FROM "timeslot"`;
+    return await this.sql<slots.Slot[]>`SELECT * FROM "timeslots"`;
   }
 
   async getUserSlots(id: number) {
-    return await this.sql<slots.Slot[]>`SELECT * FROM "timeslot" WHERE id_user = ${id}`;
+    return await this.sql<slots.Slot[]>`SELECT * FROM "timeslots" WHERE id_user = ${id}`;
   }
 
   async getSlotById(id: number) {
@@ -66,7 +66,7 @@ export class Repository {
   }
 
   async getUserById(id: number) {
-    return await this.sql<user.User[]>`SELECT * FROM users WHERE id_user = ${id};`;
+    return await this.sql<user.User[]>`SELECT * FROM "users" WHERE id_user = ${id};`;
   }
 
   async editUser(id: number, params: user.PartialUser) {

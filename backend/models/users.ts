@@ -3,8 +3,10 @@ import { z } from "zod";
 export const ZUsers = z
   .object({
     id_user: z.number(),
-    first_name: z.string(),
-    last_name: z.string(),
+    username: z.string(),
+    description: z.string(),
+    speciality: z.string(),
+    avatar: z.string()
   })
   .strict();
 

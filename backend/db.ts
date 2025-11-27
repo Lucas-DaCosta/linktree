@@ -1,4 +1,7 @@
 import postgres from 'postgres'
+import * as user from "./models/users.ts";
+import * as auth from "./models/auth.ts";
+import * as slots from "./models/timeslots.ts";
 
 process.loadEnvFile();
 
@@ -9,95 +12,58 @@ export class Repository {
     this.sql = postgres();
   }
 
-  async addActivity(
-    param: Omit<Activity, "id_activity" | "true_start" | "true_end" | "status">,
+  async addSlot(
+    param: slots.InputSlot,
   ) {
     await this
-      .sql`INSERT INTO activity(name, description, start_date, end_date, true_start, true_end, places, status, id_user, id_event, id_room) VALUES (${param.name}, ${param.description}, ${param.start_date}, ${param.end_date}, ${param.start_date}, ${param.end_date}, ${param.places}, 'scheduled', ${param.id_user}, ${param.id_event}, ${param.id_room});`
+      .sql`INSERT INTO timeslots(start_date, end_date, username, user_email) VALUES (${param.start_date}, ${param.end_date}, ${param.username}, ${param.user_email});`
       .then(() => {
-        console.log("The activity %s has been added.", param.name);
+        console.log("The slot at %s has been booked.", param.start_date);
       })
       .catch(console.error);
   }
 
-  async getActivities() {
-    return await this.sql<Activity[]>`SELECT * FROM "activity"`;
+  async getSlots() {
+    return await this.sql<slots.Slot[]>`SELECT * FROM "timeslot"`;
   }
 
-  async getActivityById(id: number) {
+  async getSlotById(id: number) {
     return await this.sql<
-      Activity[]
-    >`SELECT * FROM activity WHERE id_activity = ${id};`;
+      slots.Slot[]
+    >`SELECT * FROM timeslots WHERE id_slot = ${id};`;
   }
 
-  async editActivity(
+  async editSlot(
     id: number,
-    params: Partial<
-      Omit<Activity, "id_activity" | "id_event" | "start_date" | "end_date">
-    >,
+    params: slots.PartialSlot
   ) {
     await this
-      .sql`UPDATE activity SET ${this.sql(params)} WHERE id_activity = ${id};`;
+      .sql`UPDATE timeslots SET ${this.sql(params)} WHERE id_slot = ${id};`;
   }
 
-  async deleteActivity(id: number) {
-    await this.sql`DELETE FROM activity WHERE id_activity = ${id};`
+  async deleteSlot(id: number) {
+    await this.sql`DELETE FROM timeslots WHERE id_slot = ${id};`
       .then(() => {
-        console.log("Activity: %d has been deleted", id);
+        console.log("Timeslot: %d has been deleted", id);
       })
       .catch(console.error);
   }
 
-  async linkUserActivity(
-    id_user: number,
-    id_activity: number,
-  ) {
-    await this
-      .sql`INSERT INTO books(id_user, id_activity, waiting) VALUES (${id_user}, ${id_activity});`
-      .then(() => {
-        console.log(
-          "User: %d and Activity: %d has been linked.",
-          id_user,
-          id_activity,
-        );
-      })
-      .catch(console.error);
-  }
-
-  async getUserActivity(id_user: number, id_activity: number) {
+  async addUser(params: user.InputUser) {
     return await this.sql<
-      Array<{ id_user: number; id_activity: number; waiting: number }>
-    >`SELECT * FROM books WHERE id_user = ${id_user} AND id_activity = ${id_activity};`;
-  }
-
-  async deleteUserActivity(id_user: number, id_activity: number) {
-    await this
-      .sql`DELETE FROM books WHERE id_user = ${id_user} AND id_activity = ${id_activity};`
-      .then(() => {
-        console.log(
-          "User: %d linked to the activity: %d has been deleted.",
-          id_user,
-          id_activity,
-        );
-      })
-      .catch(console.error);
-  }
-
-  async addUser(params: Omit<Users, "id_user">) {
-    return await this.sql<
-      Users[]
-    >`INSERT INTO users(first_name, last_name, role) VALUES (${params.first_name}, ${params.last_name}, ${params.role}) RETURNING *;`;
+      user.User[]
+    >`INSERT INTO users(username, description, speciality, avatar) VALUES (${params.username}, ${params.description}, ${params.speciality}, ${params.avatar}) RETURNING *;`;
   }
 
   async getUsers() {
-    return await this.sql<Users[]>`SELECT * FROM "users"`;
+    return await this.sql<user.User[]>`SELECT * FROM "users"`;
   }
 
   async getUserById(id: number) {
-    return await this.sql<Users[]>`SELECT * FROM users WHERE id_user = ${id};`;
+    return await this.sql<user.User[]>`SELECT * FROM users WHERE id_user = ${id};`;
   }
 
-  async editUser(id: number, params: Partial<Omit<Users, "id_user">>) {
+  async editUser(id: number, params: user.PartialUser) {
     await this.sql`UPDATE users SET ${this.sql(params)} WHERE id_user = ${id};`;
   }
 
@@ -113,22 +79,22 @@ export class Repository {
   }
 
   async getAuths() {
-    return await this.sql<AuthUser[]>`SELECT * FROM "auth"`;
+    return await this.sql<auth.AuthUser[]>`SELECT * FROM "auth"`;
   }
 
   async getAuthById(id: number) {
-    return await this.sql<AuthUser[]>`SELECT * FROM "auth" WHERE id_auth=${id}`;
+    return await this.sql<auth.AuthUser[]>`SELECT * FROM "auth" WHERE id_auth=${id}`;
   }
 
   async getAuthByEmail(email: string) {
     return await this.sql<
-      AuthUser[]
+      auth.AuthUser[]
     >`SELECT * FROM auth WHERE email = ${email};`;
   }
 
-  async addAuth(params: Omit<AuthUser, "id_auth">) {
+  async addAuth(params: auth.InputAuth) {
     await this.sql<
-      AuthUser[]
+      auth.AuthUser[]
     >`INSERT INTO "auth" (email, password, id_user) VALUES (${params.email}, ${params.password}, ${params.id_user})`;
   }
 
@@ -136,10 +102,10 @@ export class Repository {
     await this.getAuthById(id).then((curr_auth) =>
       console.log("Element removed :", curr_auth),
     );
-    await this.sql<AuthUser[]>`DELETE FROM "auth" WHERE id_auth=${id}`;
+    await this.sql<auth.AuthUser[]>`DELETE FROM "auth" WHERE id_auth=${id}`;
   }
 
-  async editAuth(id: number, params: Partial<Omit<AuthUser, "id_auth">>) {
+  async editAuth(id: number, params: auth.PartialAuth) {
     await this.sql`UPDATE auth SET ${this.sql(params)} WHERE id_auth = ${id};`;
   }
 

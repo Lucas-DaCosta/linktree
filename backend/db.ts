@@ -2,6 +2,7 @@ import postgres from 'postgres'
 import * as user from "./models/users.ts";
 import * as auth from "./models/auth.ts";
 import * as slots from "./models/timeslots.ts";
+import * as linktree from "./models/linktree.ts";
 
 process.loadEnvFile();
 
@@ -72,6 +73,35 @@ export class Repository {
       console.log("Element removed :", curr_auth),
     );
     await this.sql`DELETE FROM users WHERE id_user = ${id};`
+      .then(() => {
+        console.log("The id %d has been removed.", id);
+      })
+      .catch(console.error);
+  }
+
+  async addLinktree(params: linktree.InputLink) {
+    return await this.sql<
+      linktree.Linktree[]
+    >`INSERT INTO linktree(name, logo, url, id_user) VALUES (${params.name}, ${params.logo}, ${params.url}, ${params.id_user}) RETURNING *;`;
+  }
+
+  async getLinktree() {
+    return await this.sql<linktree.Linktree[]>`SELECT * FROM "linktree"`;
+  }
+
+  async getLinktreeById(id: number) {
+    return await this.sql<linktree.Linktree[]>`SELECT * FROM linktree WHERE id_link = ${id};`;
+  }
+
+  async editLinktree(id: number, params: linktree.PartialLink) {
+    await this.sql`UPDATE linktree SET ${this.sql(params)} WHERE id_link = ${id};`;
+  }
+
+  async deleteLinktreeById(id: number) {
+    await this.getLinktreeById(id).then((curr_auth) =>
+      console.log("Element removed :", curr_auth),
+    );
+    await this.sql`DELETE FROM linktree WHERE id_user = ${id};`
       .then(() => {
         console.log("The id %d has been removed.", id);
       })

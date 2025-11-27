@@ -1,5 +1,3 @@
-import React from "react";
-
 interface CardProps {
     url?: string, 
     alt?: string, 
@@ -9,7 +7,6 @@ interface CardProps {
     email: string,
     phone: string
 }
-
 
 export default function Card({url, alt, width, height, name, email, phone}: CardProps) {
     return (

@@ -1,0 +1,36 @@
+DROP TABLE IF EXISTS timeslots CASCADE;
+DROP TABLE IF EXISTS auth CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS linktree CASCADE;
+
+
+CREATE TABLE users (
+    id_user SERIAL PRIMARY KEY,
+    user_name VARCHAR(100) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    speciality VARCHAR(255) NOT NULL,
+    avatar TEXT
+);
+
+CREATE TABLE auth (
+    id_auth SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    id_user INT NOT NULL UNIQUE REFERENCES users(id_user) ON DELETE CASCADE
+);
+
+CREATE TABLE timeslots (
+    id_slot SERIAL PRIMARY KEY,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE linktree (
+    id_link SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    logo VARCHAR(255) NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    id_user INT NOT NULL REFERENCES users(id_user) ON DELETE CASCADE
+);

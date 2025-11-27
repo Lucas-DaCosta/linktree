@@ -32,7 +32,7 @@ function App() {
       </p>
       <Button>Je suis le bouton</Button>
       <Button>Moi aussi je suis un bouton</Button>
-      <Card name='Yanis' email='yanis@sansa.com' phone='0678694521' url="../public/assets/yanis.jpg"></Card>
+      <Card name='Yanis' email='yanis@sansa.com' phone='0678694521' url='../public/assets/yanis.jpg'></Card>
     </>
   )
 }

@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    volumes:
+      - pg_data:/var/lib/postgresql
+      - ./migrations/:/docker-entrypoint-initdb.d
+      - ./queries:/queries
+    environment:
+      POSTGRES_PASSWORD: password_very_secret
+      POSTGRES_USER: lucasDC
+
+volumes:
+  pg_data:
+    name: "linktree"

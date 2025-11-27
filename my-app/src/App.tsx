@@ -29,7 +29,8 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <Button/>
+      <Button>Je suis le bouton</Button>
+      <Button>Moi aussi je suis un bouton</Button>
     </>
   )
 }

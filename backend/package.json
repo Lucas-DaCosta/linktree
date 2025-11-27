@@ -11,8 +11,15 @@
   "license": "ISC",
   "packageManager": "pnpm@10.18.3",
   "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^11.1.0",
+    "date-fns": "^4.1.0",
+    "fastify": "^5.6.2",
+    "fastify-type-provider-zod": "^6.1.0",
+    "jose": "^6.1.2",
     "postgres": "^3.4.7",
-    "zod": "^4.1.13"
+    "zod": "^4.1.13",
+    "zod-validation-error": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.10.1"

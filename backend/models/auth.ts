@@ -18,8 +18,10 @@ export const ZOmitAuth = ZAuthUser.omit({ id_auth: true }).strict();
 
 export const ZUserAuthRegister = z
   .object({
-    first_name: z.string(),
-    last_name: z.string(),
+    username: z.string(),
+    description: z.string(),
+    speciality: z.string(),
+    avatar: z.string(),
     email: z.email(),
     password: z.string(),
   })

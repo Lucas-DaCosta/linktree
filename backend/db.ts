@@ -17,7 +17,7 @@ export class Repository {
     param: slots.InputSlot,
   ) {
     await this
-      .sql`INSERT INTO timeslots(start_date, end_date, username, user_email) VALUES (${param.start_date}, ${param.end_date}, ${param.username}, ${param.user_email});`
+      .sql`INSERT INTO timeslots(start_date, end_date, username, user_email, id_user) VALUES (${param.start_date}, ${param.end_date}, ${param.username}, ${param.user_email}, ${param.id_user});`
       .then(() => {
         console.log("The slot at %s has been booked.", param.start_date);
       })
@@ -28,6 +28,10 @@ export class Repository {
     return await this.sql<slots.Slot[]>`SELECT * FROM "timeslot"`;
   }
 
+  async getUserSlots(id: number) {
+    return await this.sql<slots.Slot[]>`SELECT * FROM "timeslot" WHERE id_user = ${id}`;
+  }
+
   async getSlotById(id: number) {
     return await this.sql<
       slots.Slot[]
@@ -35,11 +39,12 @@ export class Repository {
   }
 
   async editSlot(
-    id: number,
+    id_slot: number,
+    id_user: number,
     params: slots.PartialSlot
   ) {
     await this
-      .sql`UPDATE timeslots SET ${this.sql(params)} WHERE id_slot = ${id};`;
+      .sql`UPDATE timeslots SET ${this.sql(params)} WHERE id_slot = ${id_slot} AND is_user = ${id_user};`;
   }
 
   async deleteSlot(id: number) {

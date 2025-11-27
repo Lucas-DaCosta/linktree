@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS linktree CASCADE;
 
 CREATE TABLE users (
     id_user SERIAL PRIMARY KEY,
-    user_name VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL,
     description VARCHAR(255) NOT NULL,
     speciality VARCHAR(255) NOT NULL,
     avatar TEXT
@@ -24,7 +24,8 @@ CREATE TABLE timeslots (
     start_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP NOT NULL,
     username VARCHAR(255) NOT NULL,
-    user_email VARCHAR(255) NOT NULL
+    user_email VARCHAR(255) NOT NULL,
+    id_user INT NOT NULL REFERENCES users(id_user) ON DELETE CASCADE
 );
 
 CREATE TABLE linktree (

@@ -10,7 +10,7 @@ services:
       - ./migrations/:/docker-entrypoint-initdb.d
       - ./queries:/queries
     environment:
-      POSTGRES_PASSWORD: password_very_secret
+      POSTGRES_PASSWORD: 1234
       POSTGRES_USER: lucasDC
 
 volumes:

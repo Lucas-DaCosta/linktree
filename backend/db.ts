@@ -110,7 +110,7 @@ export class Repository {
     await this.getLinktreeById(id).then((curr_auth) =>
       console.log("Element removed :", curr_auth),
     );
-    await this.sql`DELETE FROM linktree WHERE id_user = ${id};`
+    await this.sql`DELETE FROM linktree WHERE id_link = ${id};`
       .then(() => {
         console.log("The id %d has been removed.", id);
       })

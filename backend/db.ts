@@ -84,10 +84,10 @@ export class Repository {
       .catch(console.error);
   }
 
-  async addLinktree(params: linktree.InputLink) {
+  async addLinktree(id_user: number, params: linktree.InputLink) {
     return await this.sql<
       linktree.Linktree[]
-    >`INSERT INTO linktree(name, logo, url, id_user) VALUES (${params.name}, ${params.logo}, ${params.url}, ${params.id_user}) RETURNING *;`;
+    >`INSERT INTO linktree(name, logo, url, id_user) VALUES (${params.name}, ${params.logo}, ${params.url}, ${id_user}) RETURNING *;`;
   }
 
   async getLinktree() {

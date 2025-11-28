@@ -444,7 +444,11 @@ function start_web_server() {
       schema: { body: linktree.ZOmitLink },
     },
     async (req, res) => {
-        await repo.addLinktree(req.body);
+        if (!req.claims) {
+          throw new NotFoundError("You're not connected");
+        }
+        const current_user = await repo.getAuthByEmail(req.claims.sub);
+        await repo.addLinktree(current_user[0].id_user, req.body);
         res.code(201);
     },
   );
@@ -458,12 +462,12 @@ function start_web_server() {
       }
     },
     async (req, res) => {
-      const slot = await repo.getSlotById(req.params.id);
-      if (slot.length === 0) {
+      const linktree = await repo.getLinktreeById(req.params.id);
+      if (linktree.length === 0) {
         throw new NotFoundError("link not found");
       }
       const current_user = await repo.getAuthByEmail(req.claims.sub);
-      if (slot[0].id_user !== current_user[0].id_user) {
+      if (linktree[0].id_user !== current_user[0].id_user) {
         throw new RoleOnly("You are not allowed to do this action");
       }
       await repo.editLinktree(req.params.id, current_user[0].id_user, req.body);

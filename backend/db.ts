@@ -94,12 +94,16 @@ export class Repository {
     return await this.sql<linktree.Linktree[]>`SELECT * FROM "linktree"`;
   }
 
+  async getUserLinktree(id: number) {
+    return await this.sql<linktree.Linktree[]>`SELECT * FROM "linktree" WHERE id_user = ${id}`;
+  }
+
   async getLinktreeById(id: number) {
     return await this.sql<linktree.Linktree[]>`SELECT * FROM linktree WHERE id_link = ${id};`;
   }
 
-  async editLinktree(id: number, params: linktree.PartialLink) {
-    await this.sql`UPDATE linktree SET ${this.sql(params)} WHERE id_link = ${id};`;
+  async editLinktree(id_link: number, id_user: number, params: linktree.PartialLink) {
+    await this.sql`UPDATE linktree SET ${this.sql(params)} WHERE id_link = ${id_link} AND id_user = ${id_user};`;
   }
 
   async deleteLinktreeById(id: number) {

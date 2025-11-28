@@ -10,7 +10,7 @@ export const Zlinktree = z
   })
   .strict();
 
-export const ZPartialLink = Zlinktree.omit({id_link: true}).partial().strict();
+export const ZPartialLink = Zlinktree.omit({id_link: true, id_user: true}).partial().strict();
 export const ZOmitLink = Zlinktree.omit({id_link: true}).strict();
 
 export type Linktree = z.infer<typeof Zlinktree>;

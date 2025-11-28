@@ -383,6 +383,104 @@ function start_web_server() {
     },
   );
 
+  web_server.get("/linktree", async () => {
+    const result = await repo.getLinktree();
+    return result;
+  });
+
+  web_server.get<{ Params: { id: number } }>(
+    "/linktree/:id",
+    { schema: { params: z.object({ id: z.coerce.number() }) } },
+    async (req) => {
+      const result = await repo.getLinktreeById(req.params.id);
+      if (result.length === 0) {
+        throw new NotFoundError("Linktree not found");
+      } else {
+        return result;
+      }
+    },
+  );
+
+  web_server.get<{ Params: { id: number } }>(
+    "/linktree/user/:id",
+    { schema: { params: z.object({ id: z.coerce.number() }) } },
+    async (req) => {
+      const user = await repo.getUserById(req.params.id);
+      const result = await repo.getUserLinktree(req.params.id);
+      if (user.length === 0) {
+        throw new NotFoundError("User not found");
+      } else if (result.length === 0) {
+        throw new NotFoundError("You have no link to your linktree");
+      } else {
+        return result;
+      }
+    },
+  );
+
+  web_server.get(
+    "/linktree/user",
+    async (req) => {
+      const current = await repo.getAuthByEmail(req.claims.sub);
+      const result = await repo.getUserLinktree(current[0].id_user);
+      if (current.length === 0) {
+        throw new NotFoundError("You're not connected");
+      } else if (result.length === 0) {
+        throw new NotFoundError("You have no link to your linktree");
+      } else {
+        return result;
+      }
+    },
+  );
+
+  web_server.post<{ Body: linktree.InputLink }>(
+    "/linktree",
+    {
+      schema: { body: linktree.ZOmitLink },
+    },
+    async (req, res) => {
+        await repo.addLinktree(req.body);
+        res.code(201);
+    },
+  );
+
+  web_server.put<{ Params: { id: number }; Body: linktree.PartialLink }>(
+    "/linktree/:id",
+    {
+      schema: {
+        params: z.object({ id: z.coerce.number() }),
+        body: linktree.ZPartialLink,
+      }
+    },
+    async (req, res) => {
+      const slot = await repo.getSlotById(req.params.id);
+      if (slot.length === 0) {
+        throw new NotFoundError("link not found");
+      }
+      const current_user = await repo.getAuthByEmail(req.claims.sub);
+      if (slot[0].id_user !== current_user[0].id_user) {
+        throw new RoleOnly("You are not allowed to do this action");
+      }
+      await repo.editLinktree(req.params.id, current_user[0].id_user, req.body);
+      res.code(204);
+    },
+  );
+
+  web_server.delete<{ Params: { id: number } }>(
+    "/linktree/:id",
+    {
+      schema: { params: z.object({ id: z.coerce.number() }) },
+    },
+    async (req, res) => {
+      const result = await repo.getLinktreeById(req.params.id);
+      if (result.length === 0) {
+        throw new NotFoundError("linktree not found");
+      } else {
+        await repo.deleteLinktreeById(req.params.id);
+        res.code(204);
+      }
+    },
+  );
+
   web_server.listen({ port: 1234, host: "0.0.0.0" }, (err, address) => {
     if (err) {
       console.error(err);

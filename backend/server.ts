@@ -82,7 +82,7 @@ function start_web_server() {
   const token_manager = new TokenManager();
 
   web_server.register(cors, {
-    origin: "http://localhost:1234",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -173,7 +173,6 @@ function start_web_server() {
     });
   });
 
-  // Routes
   web_server.post<{ Body: { email: string; password: string } }>(
     "/auth",
     { schema: { body: z.object({ email: z.string(), password: z.string() }) } },
@@ -187,6 +186,7 @@ function start_web_server() {
         res.setCookie("access_token", token_user, {
           secure: false,
           sameSite: false,
+          path: "/",
           expires: addHours(new Date(), 1),
         });
         res.code(200);

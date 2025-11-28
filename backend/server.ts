@@ -311,6 +311,9 @@ function start_web_server() {
   web_server.get(
     "/timeslots/user",
     async (req) => {
+      if (!req.claims) {
+        throw new NotFoundError("You're not connected");
+      }
       const current = await repo.getAuthByEmail(req.claims.sub);
       const result = await repo.getUserSlots(current[0].id_user);
       if (current.length === 0) {
@@ -420,10 +423,13 @@ function start_web_server() {
   web_server.get(
     "/linktree/user",
     async (req) => {
+      if (!req.claims) {
+        throw new NotFoundError("You're not connected");
+      }
       const current = await repo.getAuthByEmail(req.claims.sub);
       const result = await repo.getUserLinktree(current[0].id_user);
       if (current.length === 0) {
-        throw new NotFoundError("You're not connected");
+        throw new NotFoundError("User not found");
       } else if (result.length === 0) {
         throw new NotFoundError("You have no link to your linktree");
       } else {

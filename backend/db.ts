@@ -1,8 +1,8 @@
 import postgres from 'postgres'
-import * as user from "./models/users.ts";
-import * as auth from "./models/auth.ts";
-import * as slots from "./models/timeslots.ts";
-import * as linktree from "./models/linktree.ts";
+import * as user from "../models/users.ts";
+import * as auth from "../models/auth.ts";
+import * as slots from "../models/timeslots.ts";
+import * as linktree from "../models/linktree.ts";
 
 process.loadEnvFile();
 

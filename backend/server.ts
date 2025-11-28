@@ -12,10 +12,10 @@ import {
 import { z } from "zod";
 import * as ZodValidationError from "zod-validation-error";
 import { Repository } from "./db.ts";
-import * as user from "./models/users.ts";
-import * as auth from "./models/auth.ts";
-import * as slots from "./models/timeslots.ts";
-import * as linktree from "./models/linktree.ts";
+import * as user from "../models/users.ts";
+import * as auth from "../models/auth.ts";
+import * as slots from "../models/timeslots.ts";
+import * as linktree from "../models/linktree.ts";
 import { type JwtClaims, TokenManager } from "./token.ts";
 
 declare module "fastify" {

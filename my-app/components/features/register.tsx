@@ -73,7 +73,7 @@ export function Register() {
               type="hidden"
               name="avatar"
               id="avatar"
-              value="default"
+              value=""
               className="mt-2 w-full rounded-lg border border-gray-600 bg-gray-700 text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />

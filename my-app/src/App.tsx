@@ -4,32 +4,33 @@ import axios from 'axios'
 import './App.css' 
 import Footer from '../components/shared/footer.tsx'
 import Header from '../components/shared/header.tsx'
+import Card from '../components/ui/card.tsx'
 import * as user from "../../models/users.ts"
 import Login from "../components/features/login.tsx"
 import Register from "../components/features/register.tsx"
 import Logout from "../components/features/logout.tsx"
+import Profil from "../components/features/profil.tsx"
+import OtherProfil from "../components/features/otherprofil.tsx"
 
 function Accueil() {
   const [userData, setUserData] = useState<user.User[]>([]);
-  const [error, setError] = useState<string>("");
   useEffect(() => {
-    axios.get("/api/users").then((res) => setUserData(res.data)).catch((err) => {console.log(err); setError("Erreur de requête")})
+    axios.get("/api/users").then((res) => setUserData(res.data)).catch((err) => {console.log(err); console.log(err)})
   }, []);
-  if (error) {
-    return (
-      <>
-       <p> {error} </p>
-      </>
-    )
-  }
   return (
     <>
-      <p>Liste des users :</p>
-      <ul>{userData.map((user) => (
-        <li key={user.id_user}>
-          {user.username}
-        </li>
-      ))}</ul>
+      <div className="grid gap-4
+                      grid-cols-1
+                      sm:grid-cols-2
+                      md:grid-cols-3
+                      lg:grid-cols-4
+                      "> 
+      {userData.map((user) => (
+        <a className="hover:opacity-50" key={user.id_user} href={`/profil/${user.id_user}`}>
+          <Card currentUser={user}></Card>
+        </a>
+      ))}
+      </div>
     </>
   )
 }
@@ -44,6 +45,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/profil" element={<Profil />} />
+          <Route path="/profil/:id" element={<OtherProfil />} />
         </Routes>
       </Router>
       <Footer/>

@@ -6,6 +6,8 @@ import Footer from '../components/shared/footer.tsx'
 import Header from '../components/shared/header.tsx'
 import * as user from "../../models/users.ts"
 import Login from "../components/features/login.tsx"
+import Register from "../components/features/register.tsx"
+import Logout from "../components/features/logout.tsx"
 
 function Accueil() {
   const [userData, setUserData] = useState<user.User[]>([]);
@@ -40,7 +42,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Accueil />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/register" element={<Register />} /> */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </Router>
       <Footer/>

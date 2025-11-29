@@ -178,14 +178,13 @@ function start_web_server() {
     { schema: { body: z.object({ email: z.string(), password: z.string() }) } },
     async (req, res) => {
       if (await repo.login(req.body.email, req.body.password)) {
-        const auth = await repo.getAuthByEmail(req.body.email);
-        const user = await repo.getUserById(auth[0].id_user);
         const token_user = await token_manager.encode({
           sub: req.body.email
         });
         res.setCookie("access_token", token_user, {
+          httpOnly: true,
           secure: false,
-          sameSite: false,
+          sameSite: "lax",
           path: "/",
           expires: addHours(new Date(), 1),
         });
@@ -195,6 +194,21 @@ function start_web_server() {
       }
     },
   );
+
+  web_server.get(
+    "/logout",
+    (_req, res) => {
+      res.clearCookie("access_token", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/"
+      })
+      res.code(200);
+      return {message: "success"};
+    },
+  );
+
 
   web_server.post<{ Body: auth.UserAuthRegister }>(
     "/register",
@@ -214,6 +228,22 @@ function start_web_server() {
         id_user: user[0].id_user,
       });
       res.code(201);
+    },
+  );
+
+  web_server.get(
+    "/user",
+    async (req) => {
+      if (!req.claims) {
+        throw new NotFoundError("You're not connected");
+      }
+      const current = await repo.getAuthByEmail(req.claims.sub);
+      if (current.length === 0) {
+        throw new NotFoundError("You're not connected");
+      } else {
+        const user = await repo.getUserById(current[0].id_user);
+        return user;
+      }
     },
   );
 

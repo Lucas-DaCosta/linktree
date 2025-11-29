@@ -4,9 +4,9 @@ import axios from 'axios'
 
 export function Login() {
   const navigate = useNavigate();
-  const sendDatas = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  const sendDatas = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
 
     try {
       await axios.post("/api/auth",

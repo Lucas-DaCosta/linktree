@@ -10,6 +10,11 @@ export const Zlinktree = z
   })
   .strict();
 
+export const logos: Record<string, string> = {"youtube": "/assets/youtube.svg",
+    "github": "/assets/github.svg",
+    "linkedin": "/assets/linkedin.svg"
+}
+
 export const ZPartialLink = Zlinktree.omit({id_link: true, id_user: true}).partial().strict();
 export const ZOmitLink = Zlinktree.omit({id_link: true, id_user: true}).strict();
 

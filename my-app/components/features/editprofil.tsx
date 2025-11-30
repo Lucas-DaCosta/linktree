@@ -4,7 +4,7 @@ import axios from 'axios'
 import * as user from "../../../models/users.ts"
 import * as linktree from "../../../models/linktree.ts"
 import Error404 from "../ui/404.tsx"
-import Button from "../ui/button.tsx"
+import Header from '../shared/header.tsx';
 
 export default function EditProfil() {
   const navigate = useNavigate();
@@ -48,7 +48,8 @@ export default function EditProfil() {
       alert("Erreur de modification, un champ est peut-être trop long"); // à remplacer par une div d'erreur tout en haut de la page
     }
   }
-  return (
+  return (<>
+    <Header/>
     <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-gray-900 via-gray-800 to-black">
       <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center text-white mb-6">
@@ -128,7 +129,22 @@ export default function EditProfil() {
             Modifier son profil
           </button>
         </form>
+        {links && links.length > 0 && (
+        <div className="p-4 border-t border-gray-200 flex flex-col space-y-2">
+          {links.map((link) => (
+            <a
+              key={link.id_link || link.url}
+              href={link.url}
+              className="flex items-center space-x-2 text-blue-500 hover:underline"
+            >
+              {Object.hasOwn(linktree.logos, link.logo) && (<img src={linktree.logos[link.logo]} alt={link.name} className="w-5 h-5" />)}
+              <span>{link.name}</span>
+            </a>
+          ))}
+        </div>
+      )}
       </div>
     </div>
+    </>
   );
 }

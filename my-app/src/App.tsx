@@ -20,6 +20,7 @@ function Accueil() {
   }, []);
   return (
     <>
+      <Header/>
       <div className="grid gap-4
                       grid-cols-1
                       sm:grid-cols-2
@@ -39,7 +40,6 @@ function Accueil() {
 function App() {
   return (
     <>
-      <Header/>
       <Router>
         <Routes>
           <Route path="/" element={<Accueil />} />

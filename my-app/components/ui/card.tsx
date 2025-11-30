@@ -12,10 +12,6 @@ const truncateText = (text: string | undefined, maxLength: number): string => {
 };
 
 export default function Card({ currentUser, links, cut }: CardProps) {
-  const logos: Record<string, string> = {"youtube": "/assets/youtube.svg",
-    "github": "/assets/github.svg",
-    "linkedin": "/assets/linkedin.svg"
-  }
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden max-w-sm mx-auto my-4">
       <div className="flex items-center space-x-4 p-4 bg-gray-100">
@@ -44,7 +40,7 @@ export default function Card({ currentUser, links, cut }: CardProps) {
               href={link.url}
               className="flex items-center space-x-2 text-blue-500 hover:underline"
             >
-              {Object.hasOwn(logos, link.logo) && (<img src={logos[link.logo]} alt={link.name} className="w-5 h-5" />)}
+              {Object.hasOwn(linktree.logos, link.logo) && (<img src={linktree.logos[link.logo]} alt={link.name} className="w-5 h-5" />)}
               <span>{link.name}</span>
             </a>
           ))}

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { type FormEvent } from 'react'
 import axios from 'axios'
+import Header from "../shared/header";
 
 export function Register() {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ export function Register() {
     }
   }
   return (
+    <>
+    <Header/>
     <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-gray-900 via-gray-800 to-black">
       <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center text-white mb-6">
@@ -155,6 +158,7 @@ export function Register() {
         </p>
       </div>
     </div>
+    </>
   );
 }
 

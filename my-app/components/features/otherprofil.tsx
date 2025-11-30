@@ -6,6 +6,7 @@ import * as linktree from "../../../models/linktree.ts"
 import Card from "../ui/card.tsx"
 import Error404 from "../ui/404.tsx"
 import Button from "../ui/button.tsx"
+import Header from '../shared/header.tsx'
 
 export default function OtherProfil() {
   const [userData, setUserData] = useState<user.User[]>([]);
@@ -26,10 +27,12 @@ export default function OtherProfil() {
     )
   }
 
-  return (
+  return (<>
+    <Header/>
     <div>
         <Card currentUser={userData[0]} links={links}></Card>
         <a href="/books"><Button> Prendre un rendez-vous </Button></a>
     </div>
+    </>
   );
 }

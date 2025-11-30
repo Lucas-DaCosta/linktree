@@ -5,6 +5,7 @@ import * as linktree from "../../../models/linktree.ts"
 import Card from "../ui/card.tsx"
 import Error404 from "../ui/404.tsx"
 import Button from "../ui/button.tsx"
+import Header from '../shared/header.tsx'
 
 export default function Profil() {
   const [userData, setUserData] = useState<user.User[]>([]);
@@ -25,9 +26,12 @@ export default function Profil() {
   }
 
   return (
+    <>
+    <Header/>
     <div>
         <Card currentUser={userData[0]} links={links}></Card>
         <a href="/profil/edit"><Button> Modifier le profil </Button></a>
     </div>
+    </>
   );
 }

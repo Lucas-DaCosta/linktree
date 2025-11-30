@@ -31,7 +31,7 @@ export default function OtherProfil() {
     <Header/>
     <div>
         <Card currentUser={userData[0]} links={links}></Card>
-        <a href="/books"><Button> Prendre un rendez-vous </Button></a>
+        <a href={`/books/${id}`}><Button> Prendre un rendez-vous </Button></a>
     </div>
     </>
   );

@@ -15,6 +15,7 @@ import EditProfil from "../components/features/editprofil.tsx"
 import DeleteLink from "../components/features/deletelink.tsx"
 import CreateLink from "../components/features/createlink.tsx"
 import Slot from "../components/features/slots.tsx"
+import Books from "../components/features/books.tsx"
 
 function Accueil() {
   const [userData, setUserData] = useState<user.User[]>([]);
@@ -55,6 +56,7 @@ function App() {
           <Route path="/link/delete/:id" element={<DeleteLink />} />
           <Route path="/link/create" element={<CreateLink />} />
           <Route path="/timeslots" element={<Slot />} />
+          <Route path="/books/:id" element={<Books />} />
         </Routes>
       </Router>
       <Footer/>

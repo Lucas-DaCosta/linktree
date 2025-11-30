@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import * as user from "../../../models/users.ts"
 import Error404 from "../ui/404.tsx"
@@ -8,10 +8,8 @@ import Header from '../shared/header.tsx'
 export default function CreateLink() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<user.User[]>([]);
-  const hasCreated = useRef(false);
 
   useEffect(() => {
-    if (hasCreated.current) return;
     const fetchData = async () => {
       try {
         const userRes = await axios.get(`/api/user`, {withCredentials: true});

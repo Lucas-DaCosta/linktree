@@ -19,6 +19,27 @@ INSERT INTO timeslots (start_date, end_date, username, user_email, id_user) VALU
 ('2025-11-20 09:00:00', '2025-11-21 16:00:00', 'Steve', 'steve@mojang.com', 3);
 
 INSERT INTO linktree (name, logo, url, id_user) VALUES
-('Mon linkedIn', 'linkedIn', 'https://fr.wikipedia.org/wiki/LinkedIn', 4),
-('Ma chaine youtube', 'youtube', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', 4),
-('Mes projets', 'github', 'https://fr.wikipedia.org/wiki/GitHub', 4);
+-- Administrator (id_user: 1)
+('LinkedIn professionnel', 'linkedin', 'https://www.linkedin.com/in/administrator', 1),
+('GitHub - Scripts Admin', 'github', 'https://github.com/administrator/admin-scripts', 1),
+
+-- John Doe - Dev Front (id_user: 2)
+('LinkedIn', 'linkedin', 'https://www.linkedin.com/in/johndoe-frontend', 2),
+('GitHub - Projets React', 'github', 'https://github.com/johndoe/react-projects', 2),
+('GitHub - Projets Angular', 'github', 'https://github.com/johndoe/angular-apps', 2),
+('Tutoriels React', 'youtube', 'https://www.youtube.com/@johndoe-react', 2),
+('Chaîne CSS & Design', 'youtube', 'https://www.youtube.com/@johndoe-css', 2),
+
+-- Jane Smith - Dev Back (id_user: 3)
+('LinkedIn Professionnel', 'linkedin', 'https://www.linkedin.com/in/janesmith-backend', 3),
+('GitHub - APIs REST', 'github', 'https://github.com/janesmith/rest-apis', 3),
+('GitHub - Microservices', 'github', 'https://github.com/janesmith/microservices', 3),
+('Tutoriels Node.js', 'youtube', 'https://www.youtube.com/@janesmith-nodejs', 3),
+
+-- Arthur Morgan - Dev Full Stack (id_user: 4)
+('Mon LinkedIn', 'linkedin', 'https://www.linkedin.com/in/arthurmorgan-fullstack', 4),
+('Ma chaîne YouTube', 'youtube', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', 4),
+('Mes projets GitHub', 'github', 'https://github.com/arthurmorgan/fullstack-projects', 4),
+('GitHub - Front-end', 'github', 'https://github.com/arthurmorgan/frontend-demos', 4),
+('GitHub - Back-end', 'github', 'https://github.com/arthurmorgan/backend-apis', 4),
+('Tutoriels Full Stack', 'youtube', 'https://www.youtube.com/@arthurmorgan-dev', 4);

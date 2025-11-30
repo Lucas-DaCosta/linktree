@@ -45,7 +45,7 @@ export function Books() {
               type="text"
               name="username"
               id="username"
-              placeholder="user1"
+              placeholder="John Doe"
               className="mt-2 w-full rounded-lg border border-gray-600 bg-gray-700 text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />

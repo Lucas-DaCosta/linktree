@@ -38,7 +38,7 @@ export default function Header() {
                       <a href="/profil/edit">Modifier son profil</a>
                     </li>
                     <li className="block px-4 py-2 hover:bg-gray-700">
-                      <a href="/slots">Consulter ses crénaux</a>
+                      <a href="/timeslots">Consulter ses crénaux</a>
                     </li>
                   </ul>
             )}

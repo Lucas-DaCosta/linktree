@@ -4,7 +4,7 @@ INSERT INTO users (username, speciality, description) VALUES
 ('Administrator', 'admin', 'I am the admin'),
 ('John Doe', 'dev front', 'Je code en font des applications web avec react et angular'),
 ('Jane Smith', 'dev back', 'Je code des API back-end pour des applications web'),
-('Arthur Morgan', 'dev full stack', 'Je créé des applications web de A à Z');
+('Arthur Morgan', 'dev full stack', 'Je créé des applications web de A à Z', 'https://imgs.search.brave.com/UHkb6F5dO25oTgmYYVE-SQ2flCzb80-_-44qwW1VPfU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/aS1zd2Vhci1hcnRo/dXItbW9yZ2FuLWlz/LW9uZS1vZi10aGUt/ZmV3LWdhbWUtY2hh/cmFjdGVycy12MC1u/bzU2N2F6cnNkeGUx/LmpwZWc_d2lkdGg9/NjQwJmNyb3A9c21h/cnQmYXV0bz13ZWJw/JnM9YzczYmEzOTI1/NmI3ZDlkMmZiZTRl/YWFiZDY4MzkxMGIw/YjFjNGRhMw');
 
 INSERT INTO auth (email, password, id_user) VALUES
 ('admin@example.com', '123Admin', 1),

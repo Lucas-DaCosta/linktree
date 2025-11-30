@@ -3,9 +3,15 @@ import * as linktree from "../../../models/linktree.ts";
 interface CardProps {
   currentUser: user.User;
   links?: linktree.Linktree[];
+  cut?: boolean
 }
 
-export default function Card({ currentUser, links }: CardProps) {
+const truncateText = (text: string | undefined, maxLength: number): string => {
+  if (!text) return "";
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+};
+
+export default function Card({ currentUser, links, cut }: CardProps) {
   const logos: Record<string, string> = {"youtube": "/assets/youtube.svg",
     "github": "/assets/github.svg",
     "linkedin": "/assets/linkedin.svg"
@@ -14,20 +20,22 @@ export default function Card({ currentUser, links }: CardProps) {
     <div className="bg-white shadow-lg rounded-lg overflow-hidden max-w-sm mx-auto my-4">
       <div className="flex items-center space-x-4 p-4 bg-gray-100">
         <img
-          src={currentUser.avatar ? currentUser.avatar : "/assets/default.webp"}
+          src={currentUser.avatar?.trim() ? currentUser.avatar : "/assets/default.webp"}
           alt={"Avatar de " + currentUser.username}
+          onError={(e) => {
+            e.currentTarget.src = "/assets/default.webp";
+          }}
           className="w-16 h-16 rounded-full border-2 border-gray-300"
         />
         <div>
-          <h2 className="text-lg font-semibold">{currentUser.username}</h2>
+          <h2 className="text-black text-lg font-semibold">{currentUser.username}</h2>
           <h3 className="text-sm text-gray-600">{currentUser.speciality}</h3>
         </div>
       </div>
 
       <div className="p-4 border-t border-gray-200">
-        <p className="text-gray-700">{currentUser.description}</p>
+        <p className="text-gray-700" >{cut ? truncateText(currentUser.description, 40) : currentUser.description}</p>
       </div>
-
       {links && links.length > 0 && (
         <div className="p-4 border-t border-gray-200 flex flex-col space-y-2">
           {links.map((link) => (

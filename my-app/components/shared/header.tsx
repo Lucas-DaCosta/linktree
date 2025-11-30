@@ -22,6 +22,9 @@ export default function Header() {
                 <img
                   src={userData[0].avatar ? userData[0].avatar : "/assets/default.webp"}
                   alt="Avatar"
+                  onError={(e) => {
+                    e.currentTarget.src = "/assets/default.webp";
+                  }}
                   className="w-13 h-13 rounded-full cursor-pointer border-2 border-gray-700 hover:opacity-30"
                   onClick={toggleMenu}
                 />

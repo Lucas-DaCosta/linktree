@@ -29,7 +29,7 @@ export default function OtherProfil() {
   return (
     <div>
         <Card currentUser={userData[0]} links={links}></Card>
-        <a href="/editprofil"><Button> Modifier le profil </Button></a>
+        <a href="/books"><Button> Prendre un rendez-vous </Button></a>
     </div>
   );
 }

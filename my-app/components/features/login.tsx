@@ -62,7 +62,7 @@ export function Login() {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-black hover:text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white hover:text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
           >
             Se connecter
           </button>

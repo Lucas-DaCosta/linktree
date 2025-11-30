@@ -11,6 +11,7 @@ import Register from "../components/features/register.tsx"
 import Logout from "../components/features/logout.tsx"
 import Profil from "../components/features/profil.tsx"
 import OtherProfil from "../components/features/otherprofil.tsx"
+import EditProfil from "../components/features/editprofil.tsx"
 
 function Accueil() {
   const [userData, setUserData] = useState<user.User[]>([]);
@@ -26,8 +27,8 @@ function Accueil() {
                       lg:grid-cols-4
                       "> 
       {userData.map((user) => (
-        <a className="hover:opacity-50" key={user.id_user} href={`/profil/${user.id_user}`}>
-          <Card currentUser={user}></Card>
+        <a className="hover:opacity-50 no-underline " key={user.id_user} href={`/profil/${user.id_user}`}>
+          <Card currentUser={user} cut={true}></Card>
         </a>
       ))}
       </div>
@@ -46,6 +47,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/profil" element={<Profil />} />
+          <Route path="/profil/edit" element={<EditProfil />} />
           <Route path="/profil/:id" element={<OtherProfil />} />
         </Routes>
       </Router>

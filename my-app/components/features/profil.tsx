@@ -27,7 +27,7 @@ export default function Profil() {
   return (
     <div>
         <Card currentUser={userData[0]} links={links}></Card>
-        <a href="/editprofil"><Button> Modifier le profil </Button></a>
+        <a href="/profil/edit"><Button> Modifier le profil </Button></a>
     </div>
   );
 }

@@ -12,6 +12,8 @@ import Logout from "../components/features/logout.tsx"
 import Profil from "../components/features/profil.tsx"
 import OtherProfil from "../components/features/otherprofil.tsx"
 import EditProfil from "../components/features/editprofil.tsx"
+import DeleteLink from "../components/features/deletelink.tsx"
+import CreateLink from "../components/features/createlink.tsx"
 
 function Accueil() {
   const [userData, setUserData] = useState<user.User[]>([]);
@@ -49,6 +51,8 @@ function App() {
           <Route path="/profil" element={<Profil />} />
           <Route path="/profil/edit" element={<EditProfil />} />
           <Route path="/profil/:id" element={<OtherProfil />} />
+          <Route path="/link/delete/:id" element={<DeleteLink />} />
+          <Route path="/link/create" element={<CreateLink />} />
         </Routes>
       </Router>
       <Footer/>
